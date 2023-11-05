@@ -23,7 +23,6 @@ public class GameOfLifeView extends JFrame {
     public final JLabel rulesToLive , rulesToBorn,  speedText;
     public boolean isPlay, isStop, isIncreaseZoom, isDecreaseZoom;
     public int speed;
-    public Box rulesText = Box.createVerticalBox();
 
     /**
      * Constructor de la clase GameOfLifeView
