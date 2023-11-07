@@ -28,15 +28,8 @@ Para ejecutar el proyecto, inicie la clase principal desde cualquier IDE, prefer
 
 ## Fuentes o Colaboradores
 
-Este proyecto se ha desarrollado tomando como base el patrón MVC para la organización de las clases y la lógica del juego. Agradecemos a [ColaboradorX](#colaboradorx) por su contribución, inspiración o recursos utilizados en la creación de esta implementación.
+Este proyecto se ha desarrollado tomando como base el patrón MVC para la organización de las clases y la lógica del juego. Agradecemos a [Leaf-Spring](https://www.youtube.com/watch?v=JK0nOJ0KW4o&pp=ygUYanVlZ28gZGUgbGEgdmlkYSBlbiBqYXZh) por su contribución, inspiración o recursos utilizados en la creación de esta implementación.
 
 ¡Diviértete explorando el fascinante mundo del Juego de la Vida!
 
 Recuerda: Cada célula cuenta una historia en la evolución del universo.
-
-
----
-
-### LeafSpring
-
-[Leaf Spring](https://www.youtube.com/watch?v=JK0nOJ0KW4o&pp=ygUYanVlZ28gZGUgbGEgdmlkYSBlbiBqYXZh)
