@@ -6,6 +6,8 @@ import co.com.unicauca.gameoflife.model.Universe;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * GameOfLifeView.java
@@ -20,9 +22,10 @@ public class GameOfLifeView extends JFrame {
     public final Grid grid;
     public final JButton stop, play, next, increaseZoom, decreaseZoom, showGrid;
     public final JTextField generationText, populationText, xText, yText;
-    public final JLabel rulesToLive , rulesToBorn,  speedText;
+    public final JSlider speedSlider;
+    public final JLabel rulesToLive , rulesToBorn;
     public boolean isPlay, isStop, isIncreaseZoom, isDecreaseZoom;
-    public int speed;
+    public int speed = 30;
 
     /**
      * Constructor de la clase GameOfLifeView
@@ -37,7 +40,6 @@ public class GameOfLifeView extends JFrame {
         panel.setLayout(null);
         panel.setPreferredSize(new Dimension(640, 640));
         add(panel);
-        speed = 30;
 
         universe = new Universe(637, 650);
         grid = new Grid(universe, 637, 640);
@@ -55,7 +57,6 @@ public class GameOfLifeView extends JFrame {
 
         JPanel generation = new JPanel(new FlowLayout());
         options.add(generation);
-        speedText = new JLabel("30");
 
         JLabel generationLabel = new JLabel("Generaci\u00f3n:");
         generation.add(generationLabel);
@@ -96,8 +97,17 @@ public class GameOfLifeView extends JFrame {
         JPanel velocidad = new JPanel(new FlowLayout());
         options.add(velocidad);
 
-        JLabel speed = new JLabel("Velocidad: 30");
-        velocidad.add(speed);
+        JLabel speedLabel = new JLabel("Velocidad: ");
+        velocidad.add(speedLabel);
+
+        speedSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 30);
+        speedSlider.setMajorTickSpacing(10);
+        speedSlider.setMinorTickSpacing(1);
+        speedSlider.setPaintTicks(true);
+        speedSlider.setPaintLabels(true);
+        velocidad.add(speedSlider);
+
+        speedSlider.addChangeListener(new ChangeHandler());
 
         stop = new JButton("Detener");
         stop.addActionListener(handler);
@@ -150,6 +160,18 @@ public class GameOfLifeView extends JFrame {
      */
     public void start() {
         (new Thread(new PaintHandler())).start();
+    }
+
+    private class ChangeHandler implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            JSlider source = (JSlider) e.getSource();
+            if (!source.getValueIsAdjusting()) {
+                int originalValue = source.getValue();
+                int invertedValue = 100 - originalValue;
+                speed = invertedValue;
+            }
+        }
     }
 
     /**
@@ -210,8 +232,6 @@ public class GameOfLifeView extends JFrame {
             } else if (e.getSource() == rulesToBorn) {
                 universe.setRulesToLive(Integer.parseInt(rulesToLive.getText()));
                 universe.setRulesToBorn(Integer.parseInt(rulesToBorn.getText()));
-            } else if (e.getSource() == speedText) {
-                speed = Integer.parseInt(speedText.getText());
             } else if (e.getSource() == next) {
                 if (!isPlay) {
                     universe.nextGeneration();

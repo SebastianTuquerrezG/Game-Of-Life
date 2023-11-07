@@ -199,9 +199,15 @@ public class Universe extends JPanel {
         Graphics2D g2D = (Graphics2D) g;
         g2D.scale(scale, scale);
         setBackground(Color.black);
-        for (Map.Entry<String, Cell> mapEntry : space.entrySet()) {
-            mapEntry.getValue().paint(g2D, offsetX, offsetY);
+
+        Collection<Cell> cc = new ArrayList<>(space.values());
+
+        for (Cell cell : cc) {
+            cell.paint(g2D, offsetX, offsetY);
         }
+        //for (Map.Entry<String, Cell> mapEntry : space.entrySet()) {
+        //    mapEntry.getValue().paint(g2D, offsetX, offsetY);
+        //}
     }
 
     /**
