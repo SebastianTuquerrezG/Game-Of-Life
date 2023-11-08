@@ -1,5 +1,8 @@
 package co.com.unicauca.gameoflife.model;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -85,6 +88,24 @@ public class Universe extends JPanel {
                 }
             }
         });
+    }
+
+    public void loadMapFromFile(String filePath) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] coordinates = line.split("/");
+
+                int x = Integer.parseInt(coordinates[0]);
+                int y = Integer.parseInt(coordinates[1]);
+
+                // Crear una nueva célula viva en las coordenadas x e y del archivo
+                new Cell(space, x, y);
+                ++population;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

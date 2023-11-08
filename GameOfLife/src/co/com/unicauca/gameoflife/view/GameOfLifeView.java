@@ -5,6 +5,7 @@ import co.com.unicauca.gameoflife.model.Universe;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Map;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -38,7 +39,7 @@ public class GameOfLifeView extends JFrame {
 
         panel = new JPanel();
         panel.setLayout(null);
-        panel.setPreferredSize(new Dimension(640, 640));
+        panel.setPreferredSize(new Dimension(640, 730));
         add(panel);
 
         universe = new Universe(637, 650);
@@ -49,7 +50,7 @@ public class GameOfLifeView extends JFrame {
         universe.setBounds(0, 0, 637, 637);
 
         sidebar = new JPanel(new BorderLayout());
-        sidebar.setPreferredSize(new Dimension(200, 640));
+        sidebar.setPreferredSize(new Dimension(200, 730));
         add(sidebar);
 
         JPanel options = new JPanel(new GridLayout(10, 1));
@@ -133,6 +134,28 @@ public class GameOfLifeView extends JFrame {
         showGrid.addActionListener(handler);
         options.add(showGrid);
 
+        JButton mapMenuButton = new JButton("Mapa");
+        options.add(mapMenuButton);
+
+        JPopupMenu mapMenu = new JPopupMenu();
+
+        MapMenuItemListener mapMenuItemListener = new MapMenuItemListener("mapa1.txt", this);
+        JMenuItem opcion1 = new JMenuItem("Mapa 1");
+        mapMenu.add(opcion1);
+        opcion1.addActionListener(mapMenuItemListener);
+
+        MapMenuItemListener mapMenuItemListener2 = new MapMenuItemListener("mapa2.txt", this);
+        JMenuItem opcion2 = new JMenuItem("Mapa 2");
+        opcion2.addActionListener(mapMenuItemListener2);
+        mapMenu.add(opcion2);
+
+        mapMenuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mapMenu.show(mapMenuButton, 0, mapMenuButton.getHeight());
+            }
+        });
+
         JPanel coordinates = new JPanel(new GridLayout(1, 1));
         sidebar.add(coordinates, BorderLayout.PAGE_END);
 
@@ -160,6 +183,26 @@ public class GameOfLifeView extends JFrame {
      */
     public void start() {
         (new Thread(new PaintHandler())).start();
+    }
+
+    public void loadMapFromFile(String filePath) {
+        universe.loadMapFromFile(filePath);
+        panel.repaint(); // Repintar el panel después de cargar el mapa
+    }
+
+    public class MapMenuItemListener implements ActionListener {
+        private String filePath;
+        private GameOfLifeView gameOfLifeView;
+
+        public MapMenuItemListener(String filePath, GameOfLifeView gameOfLifeView) {
+            this.filePath = filePath;
+            this.gameOfLifeView = gameOfLifeView;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            gameOfLifeView.loadMapFromFile(filePath);
+        }
     }
 
     private class ChangeHandler implements ChangeListener {
