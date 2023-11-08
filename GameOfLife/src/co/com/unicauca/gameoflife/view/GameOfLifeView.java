@@ -51,10 +51,10 @@ public class GameOfLifeView extends JFrame {
         universe.setBounds(0, 0, 640, 730);
 
         sidebar = new JPanel(new BorderLayout());
-        sidebar.setPreferredSize(new Dimension(200, 800));
+        sidebar.setPreferredSize(new Dimension(200, 850));
         add(sidebar);
 
-        JPanel options = new JPanel(new GridLayout(11, 1));
+        JPanel options = new JPanel(new GridLayout(12, 1));
         sidebar.add(options, BorderLayout.CENTER);
 
         JPanel generation = new JPanel(new FlowLayout());
@@ -158,6 +158,16 @@ public class GameOfLifeView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mapMenu.show(mapMenuButton, 0, mapMenuButton.getHeight());
+            }
+        });
+
+        JButton saveMapButton = new JButton("Guardar");
+        options.add(saveMapButton);
+
+        saveMapButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                universe.saveMap();
             }
         });
 

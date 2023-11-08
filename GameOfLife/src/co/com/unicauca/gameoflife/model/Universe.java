@@ -306,4 +306,7 @@ public class Universe extends JPanel {
     public int getPopulation() {
         return population;
     }
+
+    public void saveMap() {
+    }
 }
