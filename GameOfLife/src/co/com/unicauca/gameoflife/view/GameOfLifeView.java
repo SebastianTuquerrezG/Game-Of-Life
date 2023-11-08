@@ -143,14 +143,14 @@ public class GameOfLifeView extends JFrame {
         File file = new File("src/co/com/unicauca/gameoflife/test/mapa1.txt");
         String filePath = file.getAbsolutePath();
         MapMenuItemListener mapMenuItemListener = new MapMenuItemListener(filePath, this);
-        JMenuItem opcion1 = new JMenuItem("Mapa 1");
+        JMenuItem opcion1 = new JMenuItem("Basico Conway");
         mapMenu.add(opcion1);
         opcion1.addActionListener(mapMenuItemListener);
 
         File file2 = new File("src/co/com/unicauca/gameoflife/test/mapa2.txt");
         String filePath2 = file2.getAbsolutePath();
         MapMenuItemListener mapMenuItemListener2 = new MapMenuItemListener(filePath2, this);
-        JMenuItem opcion2 = new JMenuItem("Mapa 2");
+        JMenuItem opcion2 = new JMenuItem("Cohete");
         opcion2.addActionListener(mapMenuItemListener2);
         mapMenu.add(opcion2);
 
@@ -192,7 +192,6 @@ public class GameOfLifeView extends JFrame {
 
     public void loadMapFromFile(String filePath) {
         universe.loadMapFromFile(filePath);
-        panel.repaint(); // Repintar el panel después de cargar el mapa
     }
 
     public class MapMenuItemListener implements ActionListener {
