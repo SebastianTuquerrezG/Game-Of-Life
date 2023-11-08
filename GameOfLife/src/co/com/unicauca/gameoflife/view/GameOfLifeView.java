@@ -42,18 +42,18 @@ public class GameOfLifeView extends JFrame {
         panel.setPreferredSize(new Dimension(640, 730));
         add(panel);
 
-        universe = new Universe(637, 650);
-        grid = new Grid(universe, 637, 640);
+        universe = new Universe(640, 730);
+        grid = new Grid(universe, 640, 730);
         panel.add(grid);
-        grid.setBounds(0, 0, 637, 637);
+        grid.setBounds(0, 0, 640, 730);
         panel.add(universe);
-        universe.setBounds(0, 0, 637, 637);
+        universe.setBounds(0, 0, 640, 730);
 
         sidebar = new JPanel(new BorderLayout());
-        sidebar.setPreferredSize(new Dimension(200, 730));
+        sidebar.setPreferredSize(new Dimension(200, 800));
         add(sidebar);
 
-        JPanel options = new JPanel(new GridLayout(10, 1));
+        JPanel options = new JPanel(new GridLayout(11, 1));
         sidebar.add(options, BorderLayout.CENTER);
 
         JPanel generation = new JPanel(new FlowLayout());
