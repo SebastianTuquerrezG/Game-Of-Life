@@ -99,10 +99,16 @@ public class Universe extends JPanel {
                 int x = Integer.parseInt(coordinates[0]);
                 int y = Integer.parseInt(coordinates[1]);
 
-                // Crear una nueva célula viva en las coordenadas x e y del archivo
-                new Cell(space, x, y);
-                ++population;
+                int adjustedX = x / scale - offsetX;
+                int adjustedY = y / scale - offsetY;
+
+                Cell cell = space.get(String.format("%d/%d", adjustedX, adjustedY));
+                if (cell == null) {
+                    (new Cell(space, adjustedX, adjustedY)).alive();
+                    ++population;
+                }
             }
+            repaint();
         } catch (IOException e) {
             e.printStackTrace();
         }

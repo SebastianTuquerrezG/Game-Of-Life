@@ -5,6 +5,7 @@ import co.com.unicauca.gameoflife.model.Universe;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.Map;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -139,12 +140,16 @@ public class GameOfLifeView extends JFrame {
 
         JPopupMenu mapMenu = new JPopupMenu();
 
-        MapMenuItemListener mapMenuItemListener = new MapMenuItemListener("mapa1.txt", this);
+        File file = new File("src/co/com/unicauca/gameoflife/test/mapa1.txt");
+        String filePath = file.getAbsolutePath();
+        MapMenuItemListener mapMenuItemListener = new MapMenuItemListener(filePath, this);
         JMenuItem opcion1 = new JMenuItem("Mapa 1");
         mapMenu.add(opcion1);
         opcion1.addActionListener(mapMenuItemListener);
 
-        MapMenuItemListener mapMenuItemListener2 = new MapMenuItemListener("mapa2.txt", this);
+        File file2 = new File("src/co/com/unicauca/gameoflife/test/mapa2.txt");
+        String filePath2 = file2.getAbsolutePath();
+        MapMenuItemListener mapMenuItemListener2 = new MapMenuItemListener(filePath2, this);
         JMenuItem opcion2 = new JMenuItem("Mapa 2");
         opcion2.addActionListener(mapMenuItemListener2);
         mapMenu.add(opcion2);
