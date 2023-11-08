@@ -1,8 +1,6 @@
 package co.com.unicauca.gameoflife.model;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -308,5 +306,38 @@ public class Universe extends JPanel {
     }
 
     public void saveMap() {
+        String filePath = getNextMapFileName();
+        try (PrintWriter writer = new PrintWriter(filePath)) {
+            for (Cell cell : space.values()) {
+                if (cell.getState() == Cell.ALIVE) {
+                    writer.println(cell.getX() + "/" + cell.getY());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getNextMapFileName() {
+        String folderPath = "src/co/com/unicauca/gameoflife/test/"; // Ruta de la carpeta de archivos
+        File folder = new File(folderPath);
+        File[] files = folder.listFiles();
+        int maxIndex = 0;
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && file.getName().startsWith("mapa") && file.getName().endsWith(".txt")) {
+                    String fileName = file.getName();
+                    int fileIndex = Integer.parseInt(fileName.substring(4, fileName.length() - 4)); // Extraer el número del nombre del archivo
+
+                    if (fileIndex > maxIndex) {
+                        maxIndex = fileIndex;
+                    }
+                }
+            }
+        }
+
+        // Determinar el nombre del próximo archivo
+        return folderPath + "mapa" + (maxIndex + 1) + ".txt";
     }
 }

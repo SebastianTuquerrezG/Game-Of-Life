@@ -154,6 +154,14 @@ public class GameOfLifeView extends JFrame {
         opcion2.addActionListener(mapMenuItemListener2);
         mapMenu.add(opcion2);
 
+        File file3 = new File("src/co/com/unicauca/gameoflife/test/mapa3.txt");
+        String filePath3 = file3.getAbsolutePath();
+        MapMenuItemListener mapMenuItemListener3 = new MapMenuItemListener(filePath3, this);
+        JMenuItem opcion3 = new JMenuItem("Manual 1");
+        opcion3.addActionListener(mapMenuItemListener3);
+        mapMenu.add(opcion3);
+
+
         mapMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
