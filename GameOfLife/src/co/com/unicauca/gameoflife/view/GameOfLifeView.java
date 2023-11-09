@@ -139,44 +139,15 @@ public class GameOfLifeView extends JFrame {
         options.add(mapMenuButton);
 
         JPopupMenu mapMenu = new JPopupMenu();
-
-        File file = new File("src/co/com/unicauca/gameoflife/test/mapa1.txt");
-        String filePath = file.getAbsolutePath();
-        MapMenuItemListener mapMenuItemListener = new MapMenuItemListener(filePath, this);
-        JMenuItem opcion1 = new JMenuItem("Basico Conway");
-        mapMenu.add(opcion1);
-        opcion1.addActionListener(mapMenuItemListener);
-
-        File file2 = new File("src/co/com/unicauca/gameoflife/test/mapa2.txt");
-        String filePath2 = file2.getAbsolutePath();
-        MapMenuItemListener mapMenuItemListener2 = new MapMenuItemListener(filePath2, this);
-        JMenuItem opcion2 = new JMenuItem("Cohete");
-        opcion2.addActionListener(mapMenuItemListener2);
-        mapMenu.add(opcion2);
-
-        File file3 = new File("src/co/com/unicauca/gameoflife/test/mapa3.txt");
-        String filePath3 = file3.getAbsolutePath();
-        MapMenuItemListener mapMenuItemListener3 = new MapMenuItemListener(filePath3, this);
-        JMenuItem opcion3 = new JMenuItem("Manual 1");
-        opcion3.addActionListener(mapMenuItemListener3);
-        mapMenu.add(opcion3);
-
-
-        mapMenuButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mapMenu.show(mapMenuButton, 0, mapMenuButton.getHeight());
-            }
-        });
+        createMapMenu(mapMenu, mapMenuButton);
 
         JButton saveMapButton = new JButton("Guardar");
         options.add(saveMapButton);
 
-        saveMapButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                universe.saveMap();
-            }
+        saveMapButton.addActionListener(e -> {
+            universe.saveMap();
+            mapMenu.removeAll();
+            createMapMenu(mapMenu, mapMenuButton);
         });
 
         JPanel coordinates = new JPanel(new GridLayout(1, 1));
@@ -212,6 +183,28 @@ public class GameOfLifeView extends JFrame {
         universe.loadMapFromFile(filePath);
     }
 
+    public void createMapMenu(JPopupMenu mapMenu, JButton mapMenuButton) {
+        File folder = new File("src/co/com/unicauca/gameoflife/test");
+        File[] files = folder.listFiles();
+
+        if (files != null) {
+            int count = 1;
+            for (File file : files) {
+                if (file.isFile() && file.getName().startsWith("mapa") && file.getName().endsWith(".txt")) {
+                    String filePath = file.getAbsolutePath();
+                    MapMenuItemListener mapMenuItemListener = new MapMenuItemListener(filePath, this);
+                    JMenuItem mapMenuItem = new JMenuItem("Mapa " + count);
+                    mapMenuItem.addActionListener(mapMenuItemListener);
+                    mapMenu.add(mapMenuItem);
+                    count++;
+                }
+            }
+        }
+
+        mapMenuButton.addActionListener(e -> mapMenu.show(mapMenuButton, 0, mapMenuButton.getHeight()));
+
+    }
+
     public class MapMenuItemListener implements ActionListener {
         private String filePath;
         private GameOfLifeView gameOfLifeView;
@@ -223,6 +216,7 @@ public class GameOfLifeView extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            gameOfLifeView.universe.resetUniverse();
             gameOfLifeView.loadMapFromFile(filePath);
         }
     }
