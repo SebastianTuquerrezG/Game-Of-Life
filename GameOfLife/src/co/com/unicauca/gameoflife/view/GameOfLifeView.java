@@ -6,7 +6,6 @@ import co.com.unicauca.gameoflife.model.Universe;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.util.Map;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -179,10 +178,19 @@ public class GameOfLifeView extends JFrame {
         (new Thread(new PaintHandler())).start();
     }
 
+    /**
+     * Metodo que carga un mapa desde un archivo
+     * @param filePath Ruta del archivo
+     */
     public void loadMapFromFile(String filePath) {
         universe.loadMapFromFile(filePath);
     }
 
+    /**
+     * Metodo que crea el menu de mapas
+     * @param mapMenu Menu de mapas
+     * @param mapMenuButton Boton del menu de mapas
+     */
     public void createMapMenu(JPopupMenu mapMenu, JButton mapMenuButton) {
         File folder = new File("src/co/com/unicauca/gameoflife/test");
         File[] files = folder.listFiles();
@@ -202,18 +210,29 @@ public class GameOfLifeView extends JFrame {
         }
 
         mapMenuButton.addActionListener(e -> mapMenu.show(mapMenuButton, 0, mapMenuButton.getHeight()));
-
     }
 
+    /**
+     * Clase que representa el manejador de eventos del menu de mapas
+     */
     public class MapMenuItemListener implements ActionListener {
         private String filePath;
         private GameOfLifeView gameOfLifeView;
 
+        /**
+         * Constructor de la clase MapMenuItemListener
+         * @param filePath Ruta del archivo
+         * @param gameOfLifeView Vista del juego de la vida
+         */
         public MapMenuItemListener(String filePath, GameOfLifeView gameOfLifeView) {
             this.filePath = filePath;
             this.gameOfLifeView = gameOfLifeView;
         }
 
+        /**
+         * Metodo que se ejecuta cuando se presiona un item del menu de mapas, carga el mapa desde el archivo
+         * @param e Evento de tipo ActionEvent
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             gameOfLifeView.universe.resetUniverse();
@@ -221,7 +240,14 @@ public class GameOfLifeView extends JFrame {
         }
     }
 
+    /**
+     * Clase que representa el manejador de eventos del slider de velocidad
+     */
     private class ChangeHandler implements ChangeListener {
+        /**
+         * Metodo que se ejecuta cuando se cambia el valor del slider de velocidad
+         * @param e Evento de tipo ChangeEvent
+         */
         @Override
         public void stateChanged(ChangeEvent e) {
             JSlider source = (JSlider) e.getSource();

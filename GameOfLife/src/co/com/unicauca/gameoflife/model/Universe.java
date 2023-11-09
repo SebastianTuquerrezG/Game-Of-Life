@@ -88,6 +88,10 @@ public class Universe extends JPanel {
         });
     }
 
+    /**
+     * Metodo que carga un mapa de celulas desde un archivo
+     * @param filePath Ruta del archivo
+     */
     public void loadMapFromFile(String filePath) {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -293,18 +297,9 @@ public class Universe extends JPanel {
         }
     }
 
-    public int getScale() {
-        return scale;
-    }
-
-    public int getGeneration() {
-        return generation;
-    }
-
-    public int getPopulation() {
-        return population;
-    }
-
+    /**
+     * Metodo que guarda el mapa de celulas en un archivo
+     */
     public void saveMap() {
         String filePath = getNextMapFileName();
         try (PrintWriter writer = new PrintWriter(filePath)) {
@@ -318,6 +313,10 @@ public class Universe extends JPanel {
         }
     }
 
+    /**
+     * Metodo que obtiene el nombre del siguiente archivo de mapa
+     * @return Nombre del siguiente archivo de mapa
+     */
     public String getNextMapFileName() {
         String folderPath = "src/co/com/unicauca/gameoflife/test/"; // Ruta de la carpeta de archivos
         File folder = new File(folderPath);
@@ -340,4 +339,17 @@ public class Universe extends JPanel {
         // Determinar el nombre del próximo archivo
         return folderPath + "mapa" + (maxIndex + 1) + ".txt";
     }
+
+    public int getScale() {
+        return scale;
+    }
+
+    public int getGeneration() {
+        return generation;
+    }
+
+    public int getPopulation() {
+        return population;
+    }
+
 }
